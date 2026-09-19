@@ -1,0 +1,22 @@
+# Este archivo tiene que llamarse EXACTAMENTE "application.yml" (sin prefijo
+# de ningun microservicio) y vivir en la RAIZ del repo escuela-properties.
+#
+# Spring Cloud Config Server tiene esta convencion: cualquier archivo
+# "application.yml" / "application-{profile}.yml" en el repo se le sirve
+# a TODOS los clientes, sin importar su spring.application.name. Por eso
+# es el lugar correcto para centralizar el secret del JWT: se define una
+# sola vez y Auth, Gateway, Alumnos, Cursos y Administracion lo leen igual.
+#
+# IMPORTANTE: el valor real del secret NO va en este archivo ni se sube
+# a git. ${JWT_SECRET} es un placeholder: Spring lo completa en runtime
+# con una variable de entorno del sistema operativo donde corre cada
+# microservicio. Si esa variable no existe, el servicio va a fallar al
+# arrancar (a propósito - mejor que arranque con un secret vacío/default).
+#
+# Tenés que setear JWT_SECRET en cada máquina/proceso que corra alguno
+# de estos 5 servicios (Auth, Gateway, Alumno, Cursos, Administracion).
+# Ver el README para cómo hacerlo en IntelliJ.
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration-ms: 3600000
