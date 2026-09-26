@@ -28,4 +28,6 @@ jwt:
   # porque vive como fila en la base de Auth (tabla refresh_tokens), no
   # como un string autosuficiente. Es lo que realmente sostiene la sesion.
   # 604800000 ms = 7 dias.
+
   refresh-expiration-ms: 604800000
+
