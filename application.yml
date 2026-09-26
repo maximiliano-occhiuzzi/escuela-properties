@@ -5,18 +5,27 @@
 # "application.yml" / "application-{profile}.yml" en el repo se le sirve
 # a TODOS los clientes, sin importar su spring.application.name. Por eso
 # es el lugar correcto para centralizar el secret del JWT: se define una
-# sola vez y Auth, Gateway, Alumnos, Cursos y Administracion lo leen igual.
+# sola vez y Auth, Gateway y Alumnos lo leen igual (Cursos y Administracion
+# ya no tienen seguridad por ahora, asi que a ellos esta property no les
+# hace nada, no molesta).
 #
 # IMPORTANTE: el valor real del secret NO va en este archivo ni se sube
 # a git. ${JWT_SECRET} es un placeholder: Spring lo completa en runtime
 # con una variable de entorno del sistema operativo donde corre cada
 # microservicio. Si esa variable no existe, el servicio va a fallar al
-# arrancar (a propósito - mejor que arranque con un secret vacío/default).
+# arrancar (a proposito - mejor que arranque con un secret vacio/default).
 #
-# Tenés que setear JWT_SECRET en cada máquina/proceso que corra alguno
-# de estos 5 servicios (Auth, Gateway, Alumno, Cursos, Administracion).
-# Ver el README para cómo hacerlo en IntelliJ.
+# Tenes que setear JWT_SECRET en cada maquina/proceso que corra alguno
+# de estos 3 servicios (Auth, Gateway, Alumno). Ver el README.
 
 jwt:
   secret: ${JWT_SECRET}
-  expiration-ms: 3600000
+  # Access token: dura poco a proposito. Como NO se puede revocar (es la
+  # naturaleza de un JWT stateless), mantenerlo corto acota el dano si se
+  # filtra uno. 900000 ms = 15 minutos.
+  expiration-ms: 900000
+  # Refresh token: dura mucho mas (7 dias), pero SI se puede revocar,
+  # porque vive como fila en la base de Auth (tabla refresh_tokens), no
+  # como un string autosuficiente. Es lo que realmente sostiene la sesion.
+  # 604800000 ms = 7 dias.
+  refresh-expiration-ms: 604800000
