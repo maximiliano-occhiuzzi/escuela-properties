@@ -39,4 +39,4 @@ gateway:
   internal-secret: "MiClaveSecretaSuperProtegida123!"
 # Para correrlo: en cada servicio, Run As -> Run Configurations -> Environment -> Add
 #   name: JWT_SECRET, value: (el secret, no se sube a git)
-# Va en Auth, Gateway y Alumno.
+# Va en Auth, Gateway
