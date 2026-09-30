@@ -12,18 +12,26 @@ spring:
               uri: lb://auth
               predicates:
                 - Path=/auth/**
+              filters:
+                - SetRequestHeader=X-Gateway-Secret, ${gateway.internal-secret}
             - id: modulo-alumnos
               uri: lb://modulo-alumnos
               predicates:
                 - Path=/alumnos/**
+              filters:
+                - SetRequestHeader=X-Gateway-Secret, ${gateway.internal-secret}
             - id: modulo-cursos
               uri: lb://modulo-cursos
               predicates:
                 - Path=/cursos/**
+              filters:
+                - SetRequestHeader=X-Gateway-Secret, ${gateway.internal-secret}
             - id: modulo-administracion
               uri: lb://modulo-administracion
               predicates:
                 - Path=/personal/**
+              filters:
+                - SetRequestHeader=X-Gateway-Secret, ${gateway.internal-secret}
 eureka:
   client:
     service-url:
