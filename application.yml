@@ -30,6 +30,10 @@ jwt:
   # 604800000 ms = 7 dias.
 
   refresh-expiration-ms: 604800000
-#JWT_SECRET : SR0DkMaRfchzYpd0fllw7S25Z03bVfyRcbXTgERv9s4= AGREGAR CADA SECRET A ENVIROMENT DE CADA PROCESO Q QUIERAS CORRER 
-#te explico como hacerlo profe, vas AlumnoAplication por ejmplo, "run as" -> run configuration -> enviroment "ADD" --> "name: JWT_SECRET, value :SR0DkMaRfchzYpd0fllw7S25Z03bVfyRcbXTgERv9s4="
-#Y ESTO EN AUTH, ALUMNO, Y GATEWAY
+
+# --- Clave secreta de red Gateway -> microservicios -------------------
+# El Gateway la manda en la cabecera X-Gateway-Secret y cada microservicio
+# (Auth, Alumno, Cursos, Administracion) rechaza con 403 lo que no la traiga.
+# En texto plano (segun el practico). No hace falta variable de entorno.
+gateway:
+  internal-secret: "MiClaveSecretaSuperProtegida123!"
